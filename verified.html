@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>Verificación</title>
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+    <style type="text/css">
+        
+        body{
+            background-color: rgb(175, 175, 175);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container{
+
+            width: 50%;
+            height: max-content;
+
+            padding: 20px;
+
+            background-color: rgb(0, 201, 0);
+
+            color: rgb(255, 255, 255);
+
+            font-weight: 500;
+
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.4em;
+
+            border-radius: 50px;
+            border: 2px black solid;
+
+        }
+
+        span{
+            color: black;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+
+    <div class="container">
+
+        <p>Enhorabuena <span id="name"></span>, se ha registrado correctamente en <b>MercaStore</b></br>
+        Para terminar con su registro, por favor, confirme la dirección de correo electrónico mediante 
+        el enlace que ha sido enviado a <span id="mail"></span></p>
+
+    </div>
+
+    <script src="js/cabecera.js"></script>
+    <script src="js/loadData.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/firestore.js"></script>
+
+    <script>
+
+        const datos=loadUrlData();
+
+        document.getElementById("name").innerText=datos["name"];
+        document.getElementById("mail").innerText=datos["mail"];
+
+        const email=datos["mail"];
+        const password=getCookie("userPass");
+        
+        let idInterval=setInterval(() => {
+
+            loginPassword(email, password)
+                .then(userCredential => {
+
+                    if(userCredential.emailVerified){
+
+                        updateUser(userCredential)
+                            .then(() => {
+                                setCookie("userMail", datos["mail"]);
+                                window.location="index.html";
+                                clearInterval(idInterval);
+                            });
+
+                    }
+
+                })
+                .catch(error => console.error(error));
+
+        }, 5000);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/cabecera.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>Recuperar contraseña</title>
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+    <div class="cabecera-logo">
+
+        <a href="index.html">
+            <img class="logo" src="images/logo.PNG">
+        </a>
+    </div>
+
+    <div class="login" style="overflow-x: hidden;">
+
+        <div>
+
+            <h1>Recupera tu contraseña</h1>
+
+            <form id="recovery-pass" method="post">
+    
+                <div class="input-contenidor">
+                    <div class="spacing"></div>
+        
+                    <input type="text" class="loginUser" name="mailRecover" id="mailRecover" autocomplete="email">
+                    <label for="emailRecover" class="into">Correo electrónico</label>
+                </div>
+        
+                <input type="submit" value="Recuperar" class="button">
+        
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="js/cabecera.js"></script>
+    <script src="js/loadData.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/firestore.js"></script>
+
+    <script>
+
+        const emailRecover=document.getElementById("mailRecover");
+
+        emailRecover.addEventListener("blur", e => {
+
+            if(emailRecover.value.trim()){
+
+                emailRecover.nextElementSibling.classList.replace("into", "outo");
+
+            }else{
+                emailRecover.nextElementSibling.classList.toggle("into", true);
+                emailRecover.nextElementSibling.classList.toggle("outo", false);
+            }
+
+            });
+
+            emailRecover.addEventListener("focus", e => {
+
+                setTimeout(() => emailRecover.nextElementSibling.classList.replace("into", "outo"), 500);
+
+            });
+
+        const validarMail = () => {
+            if(/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(emailRecover.value)){ emailRecover.nextElementSibling.style.color="rgb(0, 128, 0)"; return true;}
+            else if(emailRecover.value.trim()) emailRecover.nextElementSibling.style.color="rgb(156, 26, 26)";
+            else emailRecover.nextElementSibling.style.color="black";
+            return false;
+        };
+
+        function setError(element, messaje){
+
+            const parent=element.parentElement;
+
+            const spanError=document.createElement("SPAN");
+
+            spanError.classList.add("error");
+
+            parent.appendChild(spanError);
+
+            const messajeContainer=document.createElement("DIV");
+            const messajeSpan=document.createElement("SPAN");
+            messajeSpan.innerText=messaje;
+            messajeContainer.appendChild(messajeSpan);
+            messajeContainer.classList.add("messaje-container");
+
+            parent.appendChild(messajeContainer);
+
+            }
+
+            function clearError(element){
+
+            const parent=element.parentElement;
+
+            if(parent.lastElementChild.classList.contains("messaje-container")) parent.removeChild(parent.lastElementChild);
+            if(parent.lastElementChild.classList.contains("error")) parent.removeChild(parent.lastElementChild);
+
+            }
+
+
+        emailRecover.addEventListener("keyup", validarMail);
+
+        const formRecover=document.getElementById("recovery-pass");
+
+        formRecover.addEventListener("submit", e => {
+
+            e.preventDefault();
+
+            clearError(emailRecover)
+
+
+            if(emailRecover.value.trim() && validarMail())
+                readUsers(new where("correo", "==", emailRecover.value))
+                    .then(userExist => {
+                        if(userExist[0]) recoverPass(emailRecover.value)
+                                        .then(() => emailSended())
+                                        .catch(() => setError(emailRecover, "El enlace ya ha sido enviado"));
+                        else setError(emailRecover, "El correo no esta registrado");
+                    });
+            else setError(emailRecover, "Introduce un córreo valido");   
+
+        });
+
+        function emailSended(){
+
+            const container=document.createElement("DIV");
+            container.classList.add("email-sended");
+            container.innerHTML=`
+                <h1 class="title">Te hemos enviado un correo con instrucciones para recuperar tu contraseña</h1>
+                <p class="messaje-mailSended">¡Veamos! Echa un ojo a tu correo electrónico y dale click al enlace para confirmar.
+                Si no vieses tu mensaje en la bandeja de entrada, quizás deberías dar un vistazo a la carpeta de spam.</p>
+            `;
+
+            //daniel.garcias@mataro.epiaedu.cat
+
+            const reSend=document.createElement("INPUT");
+            reSend.classList.add("reSend");
+            reSend.type="button";
+            reSend.value="Reenviar correo";
+
+            reSend.style.marginBottom="10px";
+
+            reSend.addEventListener("click", e => recoverPass(emailRecover.value).then(() => window.location.reload()).catch(() => window.location.reload()));
+
+            formRecover.style.display="none";
+            formRecover.previousElementSibling.style.display="none";
+
+            formRecover.parentElement.appendChild(container);
+            formRecover.parentElement.appendChild(reSend);
+
+        }
+    </script>
+</body>
+</html>

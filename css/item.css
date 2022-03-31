@@ -1,0 +1,579 @@
+.show-item {
+  height: 100vw;
+
+  display: flex;
+  flex-direction: row;
+
+  box-sizing: border-box;
+
+  padding: 0 25px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.images-item {
+  height: 75%;
+  width: 50%;
+
+  position: sticky;
+  top: 80px;
+}
+
+.info-item {
+  height: 100%;
+  width: 50%;
+}
+
+.image-big {
+  width: 100%;
+  height: 60%;
+  position: relative;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.image-big img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.image-big .control{
+    width: min-content;
+    position: absolute;
+    height: 100%;
+    font-size: 50px;
+    font-weight: 200;
+    padding: 0 15px;
+    color: rgb(201, 201, 201);
+    display: flex;
+    align-items: center;
+    z-index: 150;
+}
+
+.image-big .control span{
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-big .control:hover span{
+    opacity: .8;
+}
+
+.image-big .previous{
+    top: 0;
+    left: 0;
+}
+
+.image-big .next{
+    top: 0;
+    right: 0;
+}
+
+.images-small {
+  width: 100%;
+  height: 20%;
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 5px;
+}
+
+.image-big .exitLeft{
+    transform: translateX(-100%);
+    transition: transform 1s;
+}
+
+.image-big .exitRight{
+    transform: translateX(100%);
+    transition: transform 1s;
+}
+
+.image-big .enterLeft{
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: enterImageLeft 1s;
+}
+
+.image-big .enterRight{
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: enterImageRight 1s;
+}
+
+@keyframes enterImageLeft {
+    
+    from{
+        transform: translateX(100%);
+    }
+
+    to{
+        transform: translateX(0);
+    }
+
+}
+
+@keyframes enterImageRight {
+    
+    from{
+        transform: translateX(-100%);
+    }
+
+    to{
+        transform: translateX(0);
+    }
+
+}
+
+.images-small > div {
+  width: 100px;
+  height: 100px;
+
+  cursor: pointer;
+
+  border: 2px rgb(128, 128, 128) solid;
+}
+
+.images-small > div img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+.images-small > div.selected{
+    border-color: rgb(76, 250, 163);
+}
+
+.name-item {
+  font-size: 5em;
+
+  font-family: "Times New Roman", Times, serif;
+
+  font-weight: bold;
+
+  margin: 30px 0 10px 0;
+}
+
+.precios {
+  width: 100%;
+  height: 10%;
+}
+
+.precios {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.precio-main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
+  color: green;
+  font-size: 5em;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+
+.precio-main .cent {
+  font-size: 0.6em;
+}
+
+.precio-main .euro {
+  font-size: 0.6em;
+}
+
+.precio-no-iva {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: rgba(94, 94, 94, 0.753);
+  font-weight: bold;
+}
+
+.precio-no-iva .title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1em;
+}
+
+.precio-no-iva .precio {
+  font-size: 2em;
+  font-weight: normal;
+}
+
+.ficha-item {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.row {
+  font-size: 1.2em;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.row .column:first-child {
+  width: 20%;
+  min-width: min-content;
+  height: 100%;
+  font-weight: bold;
+}
+
+.row .column:last-child {
+  width: 70%;
+  height: 100%;
+}
+
+.ficha-item .row {
+  display: flex;
+  flex-direction: row;
+}
+
+.envio{
+  color: rgb(0, 0, 0);
+  font-size: 1.1em;
+}
+
+.envio.free {
+  color: rgb(71, 214, 71);
+  font-weight: bold;
+}
+
+.devolucion {
+  color: rgb(71, 214, 71);
+  font-weight: bold;
+}
+
+.input-number {
+  height: 40px;
+
+  display: flex;
+  flex-direction: row;
+  width: 140px;
+  align-items: center;
+}
+
+.input-number > * {
+  border-radius: 2px;
+}
+
+.input-number input {
+  width: 35px;
+  height: 35px;
+  outline: none;
+  border: 1px rgb(128, 128, 128) solid;
+  background-color: rgb(230, 230, 230);
+  text-align: center;
+}
+
+.input-number .bt-secondary {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: transparent;
+  border: 1px rgb(128, 128, 128) solid;
+  outline: none;
+}
+
+.input-number .bt-secondary:first-child {
+  border-right: none;
+}
+
+.input-number .bt-secondary:last-child {
+  border-left: none;
+}
+
+.stock {
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.2em;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.stock.aviableStock {
+  background-color: rgb(81, 207, 81);
+}
+
+.stock.littleStock {
+  background-color: rgb(248, 181, 58);
+}
+
+.stock.notStock {
+  background-color: rgb(255, 71, 71);
+}
+
+.buttons {
+  width: 100%;
+  height: 25%;
+  padding: 40px;
+}
+
+.buttons-anadir {
+  width: 100%;
+  height: 33.33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+}
+
+.buttons-anadir > button {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(233, 233, 233);
+  border: 1px rgb(128, 128, 128) solid;
+  outline: none;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 10px;
+}
+
+.favorito-icono {
+  width: 90%;
+  height: 90%;
+
+  background-image: url("../images/favorito.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+button.favorito:hover .favorito-icono {
+  background-image: url("../images/favorito_hover.png");
+
+  animation-name: latirCorazon;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+button.carrito {
+  position: relative;
+}
+
+.carrito-icono {
+  width: 90%;
+  height: 90%;
+
+  background-image: url("../images/carrito.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.carrito .arrow-down {
+  width: 40%;
+  height: 40%;
+
+  top: 0;
+  left: calc(50% + 1px);
+
+  transform: translateX(-50%);
+
+  position: absolute;
+
+  background-image: url("../images/arrow_down.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.carrito:hover .carrito-icono {
+  background-image: url("../images/carrito_hover.png");
+}
+
+.carrito:hover .arrow-down {
+  background-image: url("../images/arrow_down_hover.png");
+
+  animation-name: arrowDown;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+}
+
+button.comprar{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(83, 214, 83);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+button.comprar .value{
+    font-size: 1.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+button.comprar .arrow-right{
+    background-image: url("../images/arrow_right.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    width: 40px;
+    height: 40px;
+
+    position: absolute;
+
+    top: 50%;
+    right: 40px;
+
+    transform: translateY(-50%);
+}
+
+button.comprar:hover{
+    background-color: rgb(63, 173, 63);
+}
+
+button.comprar:disabled{
+  background-color: rgb(151, 151, 151);
+}
+
+button.comprar:disabled:hover{
+  background-color: rgb(151, 151, 151);
+}
+
+button.comprar:disabled:hover .arrow-right{
+  animation: none;
+  background-image: url("../images/arrow_right.png");
+}
+
+button.comprar:hover .arrow-right{
+    background-image: url("../images/arrow_right_hover.png");
+
+    animation-name: arrowRight;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes latirCorazon {
+  0%,
+  35% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.2);
+  }
+
+  55% {
+    transform: scale(1.3);
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes arrowDown {
+  0% {
+    top: 1.5px;
+  }
+
+  50% {
+    top: 6px;
+  }
+
+  100% {
+    top: 1px;
+  }
+}
+
+@keyframes arrowRight {
+    0% {
+        right: 35px;
+    }
+  
+    50% {
+        right: 20px;
+    }
+  
+    100% {
+        right: 40px;
+    }
+ }
+
+.compartir-item{
+
+    width: 100%;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.compartir-item .icons{
+    height: 100%;
+    width: max-content;
+
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.icons a{
+    width: 25px;
+    height: 25px;
+    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.icons .twitter{
+    background-image: url("../images/twitter.png");
+}
+
+.icons .twitter:hover{
+    background-image: url("../images/twitter_hover.png");
+}
+
+.icons .facebook{
+    background-image: url("../images/facebook.png");
+}
+
+.icons .facebook:hover{
+    background-image: url("../images/facebook_hover.png");
+}
+
+
+.icons .mail{
+    background-image: url("../images/mail.png");
+}
+
+.icons .mail:hover{
+    background-image: url("../images/mail_hover.png");
+}

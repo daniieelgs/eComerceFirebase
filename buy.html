@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>Comprar</title>
+
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/cabecera.css" type="text/css">
+    <link rel="stylesheet" href="css/buy.css" type="text/css">
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+</head>
+<body>
+    
+    <div class="cabecera-logo">
+
+        <div class="dialog-bc" style="display: none;"></div>
+
+        <a href="index.html">
+            <img class="logo" src="images/logo.PNG">
+        </a>
+    </div>
+
+    <div class="resumen-compra" style="overflow-x: hidden">
+
+        <div class="list-items"></div>
+
+        <div class="list-prices">
+            <div class="title"><h1 class="value">Factura</h1></div>
+            
+            <div class="factura">
+
+                <div class="coste-productos">
+
+                    <div class="title"><span>Artículos</span><span>Precios</span></div>
+
+                    <div class="precios"></div>
+
+                </div>
+
+                
+                <div class="coste-envio">
+
+                    <div class="title"><span>Envio</span><span>Coste</span></div>
+
+                    <div class="precios"></div>
+
+                </div>
+
+                <div class="total-final">
+
+                    <span class="title-total">TOTAL:</span>
+                    <span class="valor-total">0.00€</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="comprar" style="overflow-x: hidden">
+        <span class="value">Comprar</span>
+        <span class="arrow-right"></span>
+    </button>
+
+    <script src="js/cabecera.js"></script>
+    <script src="js/loadData.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/firestore.js"></script>
+
+    <script>
+
+        const datosUrl=loadUrlData();
+
+        const productosCompra=datosUrl['p'];
+
+        if(productosCompra=="all"){
+
+            const userMail=getCookie("userMail")
+            const userPass=getCookie("userPass")
+
+            const inGoogle=getCookie("google");
+            const idToken=getCookie("idToken");
+
+            function readCesta(){
+                readUser(auth.currentUser.uid)
+                        .then(userData => {
+
+                            productosCesta=userData["cesta"];
+                            cantidadCesta=userData["cestaCantidad"];
+                            
+                            let productosGuardados=[];    
+                            let productosIdGuardados=[];    
+                            let allPromise=[];
+        
+                            productosCesta.forEach(n => {
+                                allPromise.push(readProduct(n.id))
+                                productosIdGuardados.push(n.id);
+                            });
+                            
+                            Promise.all(allPromise)
+                                .then(productos => {
+                                    productosGuardados=productos.map(n => n.data());
+                                    setItemsBuying(productosGuardados, cantidadCesta, productosIdGuardados);
+                                });
+                        })
+            }
+
+            if(userMail && userPass) loginPassword(userMail, userPass)
+                .then(userCredential => readCesta());
+            else if(inGoogle=="true" && idToken){
+
+                    credential=firebase.auth.GoogleAuthProvider.credential(idToken);
+
+                    firebase.auth().signInWithCredential(credential)
+                        .then(user => readCesta());
+                }else alert("ERROR");
+
+        }else{
+
+            const cantidadProducto=datosUrl['n'];
+
+            readProduct(productosCompra)
+                .then(producto => setItemsBuying([producto.data()], [cantidadProducto], [productosCompra]));
+
+        }
+
+    </script>
+
+</body>
+</html>

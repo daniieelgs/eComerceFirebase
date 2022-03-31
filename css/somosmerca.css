@@ -1,0 +1,100 @@
+.titol1{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+    font-size: 25px;
+}
+
+#banner{
+    width: 1500px;
+    height: 400px;
+    background-image: url(https://thumbs.dreamstime.com/b/verduras-frutas-surtido-sobre-fondo-de-madera-blanca-concepto-alimentaci%C3%B3n-saludable-vegetariana-compras-alimentos-y-comestibles-216526620.jpg);
+}
+.titol2{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 5%;
+    margin-top: 51;
+    padding-top: 8%;
+    color: green;
+    font-size: 25px;
+    background-image: image();
+}
+.titol3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 5%;
+    margin-top: 8%;
+    padding-top: 8%;
+    color: green;
+    font-size: 25px;
+ }
+ .titol4{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 2%;
+    padding-top: 2%;
+    color: green;
+    font-size: 25px;
+ }
+.text1{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: 20px;
+    float: left;
+    padding-right: 5%;
+}
+.text2{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: 20px;
+    float: left;
+    padding-right: 5%;
+}
+.text3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: 20px;
+    float: left;
+    padding-right: 5%;
+}
+.text4{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    padding-top: 2%;
+    float: left;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.map > h1{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 5%;
+    margin-top: 8%;
+    padding-top: 8%;
+    color: green;
+    font-size: 25px;
+}
+
+.map > h2{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 5%;
+    margin-top: 8%;
+    padding-top: 8%;
+    color: rgb(0, 204, 0);
+    font-size: 15px;
+}
+
+.map{
+
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 2%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+
+    width: 100%;
+
+}

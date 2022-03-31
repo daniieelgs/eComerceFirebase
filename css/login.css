@@ -1,0 +1,417 @@
+
+body{
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.login{
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login > div{
+
+    width: 50%;
+
+}
+
+.login h1{
+    text-align: center;
+    color: green;
+    font-size: 3em;
+}
+
+.input-contenidor{
+    width: 100%;
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+}
+
+.input-contenidorH{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+}
+
+.input-contenidor .input-contenidor{
+    width: 50%;
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+}
+
+.spacing{
+    width: 100%;
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    padding-top: 15px;    
+}
+
+.spacing hr{
+    width: 38%;
+}
+
+.spacing span{
+    font-size: 1.1em;
+}
+
+.login input{
+    width: 100%;
+    background: transparent;
+    border-radius: 5px;
+    outline: none;
+
+    font-size: 1.5em;
+    padding: 5px;
+    z-index: 100;
+}
+
+.login input.loginUser{
+    border: none;
+    border-bottom: 1px rgb(128, 128, 128) solid;
+}
+
+.login .input-contenidor span.error{
+
+    position: absolute;
+
+    bottom: 15px;
+    right: 0;
+
+    width: 25px;
+    height: 25px;
+
+    background-image: url("../images/error_login.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    cursor: pointer;
+
+    z-index: 200;
+
+}
+
+.login .input-contenidor span.error:hover ~ .messaje-container{
+
+    display: flex;
+
+    opacity: 1;
+
+    transition: opacity .5s;
+
+}
+
+.login .input-contenidor .messaje-container{
+
+    opacity: 0;
+
+    transition-property: opacity;
+    transition-duration: .5s;
+    transition-delay: .5s;
+
+    animation-name: delayDisplayNone;
+    animation-duration: 0s;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+
+    position: absolute;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+
+    background-color: rgb(223, 24, 24);
+    border-radius: 40px;
+
+    width: max-content;
+    height: max-content;
+
+    top: 50%;
+    left: 100%;
+
+    transform: translateY(-50%);
+
+    z-index: 300;
+
+    cursor: default;
+
+}
+
+@keyframes delayDisplayNone {
+    
+    from{
+        display: inherit;
+    }
+
+    to{
+        display: flex;
+    }
+
+}
+
+.login .input-contenidor .messaje-container:hover{
+
+    display: flex;
+    opacity: 1;
+
+}
+
+.login .input-contenidor #pass ~ span.error{
+    right: 35px;
+}
+
+.iniciaGoogle, .iniciaRegister, .iniciaLogin{
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.iniciaRegister, .iniciaLogin{
+    margin: 40px 0;
+}
+
+.login button{
+    background-color: white;
+    width: 50%;
+
+    font-size: 1.5em;
+    padding: 5px;
+
+    border: none;
+    outline: 1px black solid;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+}
+
+.login button.loginGoogle span.logo{
+    height: 100%;
+    width: 40px;
+
+    background-image: url("../images/logoGoogle.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.login button:hover{
+    background-color: rgb(228, 228, 228);
+    outline: none;
+}
+
+.login input:focus ~ label.into{
+    
+    animation-name: exitLabel;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+
+}
+
+.login input:focus{
+    border-color: rgb(3, 172, 3);
+}
+
+.login label{
+    font-size: 1.7em;
+    position: absolute;
+    left: 10px;
+
+    font-weight: 500;
+
+}
+
+.login label.into{
+    bottom: 10px;
+
+    animation-name: enterLabel;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+.login label.outo{
+    bottom: 10px;
+    transform: translateY(-40px);
+}
+
+
+#inicia, #registra, #recovery-pass{
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login input[type="submit"], .email-sended ~ input[type="button"], input[type="button"].reSend{
+
+    width: 50%;
+    border: none;
+
+    color:white;
+    font-size: 1.5em;
+    background: rgb(0, 128, 0);
+    border-radius: 5px;
+    margin-top: 5px;
+
+    cursor: pointer;
+
+    margin: 20px 0;
+
+}
+
+.login input[type="submit"]:hover, .email-sended input[type="button"].reSend:hover{
+    background: rgb(3, 172, 3);
+}
+
+.login .recover-pass{
+    width: 100%;
+    padding: 5px;
+}
+
+.login .recover-pass a{
+    text-decoration: underline;
+    color: rgb(88, 88, 88);
+}
+
+input[type="button"].seePass{
+
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    bottom: 15px;
+    right: 0;
+
+    border: none;
+    outline: none;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    cursor: pointer;
+
+    z-index: 200;
+
+}
+
+input[type="button"].seePass.no-ver{
+    background-image: url("../images/no_ver.png");
+}
+
+input[type="button"].seePass.ver{
+    background-image: url("../images/ver.png");
+}
+
+.loader{
+
+    width: 50px;
+    height: 50px;
+
+}
+
+.loader img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.email-sended > span{
+    font-size: 1.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: rgb(0, 158, 0);
+}
+
+.email-sended > .messaje-mailSended{
+    font-size: 1.5em;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+@keyframes exitLabel {
+    
+    from{
+        transform: translateY(0);
+        color: black;
+    }
+
+    10%{
+        color: rgb(219, 42, 219);
+    }
+
+    75%{
+        color: rgb(219, 42, 219);   
+    }
+
+    to{
+       transform: translateY(-40px);
+       color: black;
+    }
+
+}
+
+@keyframes enterLabel {
+    
+    from{
+        transform: translateY(-40px);
+        color: black;
+    }
+
+    10%{
+        color: rgb(219, 42, 219);
+    }
+
+    75%{
+        color: rgb(219, 42, 219);
+    }
+
+    to{
+        transform: translateY(0);
+        color: black;
+    }
+
+}
+
+
+
+
+

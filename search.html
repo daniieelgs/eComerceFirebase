@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>Búsqueda</title>
+
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/cabecera.css" type="text/css">
+    <link rel="stylesheet" href="css/search.css" type="text/css">
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/8bdf1dfee5.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="cabecera">
+
+        <div class="dialog-bc" style="display: none;"></div>
+
+        <header>
+
+            <div class="logo-container">
+                <a href="index.html"></a>
+            </div>
+
+            <div class="search-container">
+
+                <span class="search-button-display"></span>
+
+                <div class="searcher" style="display: none;">
+
+                    <!--  ///////////////////////////////////// -->
+
+                    <select name="search" id="secciones-selector">
+                        <option selected="" value="1">Todas las secciones</option>
+                    </select>
+                    
+                    <input type="text" name="search" id="search" placeholder="Buscar...">
+                </div>
+
+            </div>
+
+            <div class="user-container">
+
+
+                <button type="button" id="button">
+                    <span class="userAccount-item" style="display: none; width: 20px; height: 20px; margin-right: 5px; background-image: url('images/userAccount.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+                    <a href="login.html"><span></span>Mi Cuenta</a>
+                </button>
+
+                <span class="cesta-item" style="display: none; width: 50px; height: 40px; margin-right: 5px; background-image: url('images/carritoCompra.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+                <span class="favorito-item " style="display: none; width: 50px; height: 40px; margin-right: 5px; background-image: url('images/favorito_hover.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+
+            </div> 
+
+        </header>
+
+        <nav>
+
+            <span class="menuIcon"></span>
+
+            <div class="menu slide-menu">
+
+                <ul class="menu-seccion">
+
+                </ul>
+
+            </div>
+
+            <div class="cestaUser slide-menu">
+
+                <div class="icon-container" style="background-image: url('images/carritoCompra.png');"></div>
+
+                <ul class="cesta-items">
+
+                </ul>
+
+                <h1 class="total-price" style="width: 100%; text-align: center">Total: <span class="price">0.00</span>€</h1>
+
+                <button class="comprar-cesta"><b>Comprar</b></button>
+
+            </div>
+
+            <div class="favoritoUser slide-menu">
+
+                <div class="icon-container" style="background-image: url('images/favorito_hover.png');"></div>
+
+                <ul class="favorito-items">
+                    
+                </ul>
+
+            </div>
+
+        </nav>
+
+        <script>
+
+            const campoBuscar=document.getElementById("search");
+            const campoSecciones=document.getElementById("secciones-selector");
+            
+            //const enterKey = e => {if(e.code=="Enter") buscar(campoBuscar.value, campoSecciones.options[campoSecciones.value-1].innerText);}
+
+            const enterKey = e => {if(e.code=="Enter" && campoBuscar.value.trim()) window.location.href=`search.html?search=${campoBuscar.value.trim().replace(' ', '%20')}` + (campoSecciones.options[campoSecciones.value-1].innerText!='Todas las secciones' ? `&section=${campoSecciones.options[campoSecciones.value-1].innerText}` : ``);}
+
+            campoBuscar.addEventListener("keydown", enterKey);
+            campoSecciones.addEventListener("keydown", enterKey);
+
+            Array.from(document.querySelectorAll(".slide-menu")).forEach(n => {
+
+                n.addEventListener("mouseenter", e => {
+                    //document.querySelector(".cabecera").style.position="static";
+                });
+
+                n.addEventListener("mouseleave", e => {
+                    //document.querySelector(".cabecera").style.position="";
+                });
+
+            });
+
+
+        </script>
+
+    </div>
+    
+    <div id="view">
+        <b class="order">Precio: <input type="number" id="minPrice" min=0 style="width: 50px; height: 20px;">€ - <input type="number" id="maxPrice" min=0 style="width: 50px; height: 20px;">€<span class="order-as"></span></b>
+        <div class="viewProducts"></div>
+    </div>
+
+    <script language="javascript" src="js/funciones.js"></script>
+    <script language="javascript" src="js/config.js"></script>
+    <script language="javascript" src="js/firestore.js"></script>
+    <script language="javascript" src="js/loadData.js"></script>
+    <script language="javascript" src="js/cabecera.js"></script>
+
+    <script>
+
+    loadUserData();
+
+    const viewProducts=document.querySelector(".viewProducts");
+
+    const loading=document.createElement("DIV");
+    loading.classList.add("loader");
+    const gif=document.createElement("IMG");
+    gif.src="images/loading.gif";
+
+    loading.appendChild(gif);
+    viewProducts.appendChild(loading);
+
+        //readSection();
+
+
+        let productosFiltrados=null;
+        let productosIdFiltrados=null;
+
+        let seccion;
+        let search;
+
+        async function load(){
+            const datos=loadUrlData();
+            seccion=datos["section"];
+            search=datos["search"];
+
+            if(seccion) seccion=seccion.replace('%20', ' ');
+
+            await readSection();
+
+            if(search){
+     
+                const removeAccents = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                const getAllProducts = allProducts => {
+
+                    let productos=[];
+
+                    for(i in allProducts) productos.push(allProducts[i]);
+
+                    return productos.flat(1);
+
+                };
+
+                const allSections="Todas las secciones"
+
+                buscar(search.replace('%20', ' '), seccion || allSections);
+
+                function buscar(item, seccion){
+
+                    if(item.trim()){
+
+                        let filtro=null;
+
+                        if(seccion!=allSections){
+                            filtro=new where("seccion", "==", objectSections[seccion].ref)
+                        }
+
+                        readProducts((productos, productosId) => {
+                            
+                            let productosSeccion=seccion == allSections ? getAllProducts(productos) : productos[seccion];
+                            productosId = seccion == allSections ? getAllProducts(productosId) : productosId[seccion];                            
+
+
+                            let filter=removeAccents(item.trim().toUpperCase());
+                            
+                            let regex='';
+
+                            for(let i of filter) regex+=i+"+";
+
+                            //regex=Array.from(filter).map(i => i+"*").toString();
+
+                            productosFiltrados=[];
+                            productosIdFiltrados=[];
+
+                            for(let i in productosSeccion){
+
+                                let item=productosSeccion[i];
+
+                                if(removeAccents(item["nombre"].trim().toUpperCase()).search(new RegExp(regex)) != -1 || removeAccents(item["descripcion"].trim().toUpperCase()).search(new RegExp(regex)) != -1){
+                                    productosFiltrados.push(item);
+                                    productosIdFiltrados.push(productosId[i]);
+                                }
+
+                            }
+
+                            //productosSeccion=productosSeccion.filter(item => removeAccents(item["nombre"].trim().toUpperCase()).search(new RegExp(regex)) != -1 || removeAccents(item["descripcion"].trim().toUpperCase()).search(new RegExp(regex)) != -1);
+
+                            addItemsSearch(productosFiltrados, productosIdFiltrados, loading)                            
+
+                        }, filtro, "precio");
+
+                    }else return
+
+                }
+
+            }else if(seccion) readProducts((productos, productosId) => addItemsSearch(productos[seccion], productosId[seccion], loading), new where("seccion", "==", objectSections[seccion].ref));
+
+
+        }
+
+        load();
+
+        let order_as=true;
+        let productosSort=null;
+        let productosIdSort=null;
+
+        document.querySelector(".order span").addEventListener("click", e => {
+
+            order_as=!order_as;
+
+            if(order_as) e.target.classList.replace("order-des", "order-as");
+            else e.target.classList.replace("order-as", "order-des");
+
+            ordenar();
+
+        });
+
+        function ordenar(){
+
+            const order=(obj1, obj2) => {
+
+
+                if(obj1["precio"] > obj2["precio"]) return (order_as ? 1 : -1);
+                else if(obj1["precio"] < obj2["precio"]) return (order_as ? -1 : 1);
+
+                return 0;
+
+            }
+
+            if(!productosSort) productosSort=productosFiltrados ?? productos[seccion];
+            if(!productosIdSort) productosIdSort=productosIdFiltrados ?? productosId[seccion];
+
+            productosIdSort=productosIdSort.sort((id1, id2) => order(productosSort[productosIdSort.indexOf(id1)], productosSort[productosIdSort.indexOf(id2)]));            
+
+            productosSort=productosSort.sort(order);
+
+            deleteItemsSearch();
+
+            addItemsSearch(productosSort, productosIdSort);
+        }
+
+        const minPrice=document.getElementById("minPrice");
+        const maxPrice=document.getElementById("maxPrice");
+
+        let minFocus=false;
+        let maxFocus=false;
+
+        minPrice.addEventListener("blur", e => {minFocus=false; setTimeout(filtrar, 100)});
+        minPrice.addEventListener("focus", e => minFocus=true);
+
+        maxPrice.addEventListener("blur", e => {maxFocus=false; setTimeout(filtrar, 100)});
+        maxPrice.addEventListener("focus", e => maxFocus=true);
+
+        function filtrar(){
+
+            if(!minFocus && !maxFocus && minPrice.value && maxPrice.value){
+
+                productosSort=productosFiltrados ?? productos[seccion];
+                productosIdSort=productosIdFiltrados ?? productosId[seccion];
+
+                productosIdSort=productosIdSort.filter(n => productosSort[productosIdSort.indexOf(n)]["precio"]*1.21 >= parseFloat(minPrice.value) && productosSort[productosIdSort.indexOf(n)]["precio"]*1.21 <= parseFloat(maxPrice.value));
+                productosSort=productosSort.filter(n => n["precio"]*1.21 >= parseFloat(minPrice.value) && n["precio"]*1.21 <= parseFloat(maxPrice.value));
+
+                deleteItemsSearch();
+
+                addItemsSearch(productosSort, productosIdSort);
+
+            }else if(!(minPrice.value && maxPrice.value)){
+
+                productosSort=productosFiltrados ?? productos[seccion];
+                productosIdSort=productosIdFiltrados ?? productosId[seccion];
+
+                ordenar();
+
+            }
+
+        }
+
+
+    </script>
+
+<footer class="infofinal">
+
+    <div class="footer-left">
+
+        <div class="socials">
+
+            <a href="https://www.facebook.com/MercaStore-103038178983527"><i class="fa-brands fa-facebook-square"></i></a>
+            <a href="https://www.instagram.com/mercastoreweb/"><i class="fa-brands fa-instagram-square"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter-square"></i></a>
+        
+        </div>
+
+    </div>
+
+    <ul class="footer-right">
+
+        <li class="compañia">
+
+            <h2>COMPAÑÍA</h2>
+
+            <ul class="box">
+
+                <li><a href="somosmerca.html">Somos MercaStore</a></li>
+                <li><a href="#">Calidad MercaStore</a></li>
+                <li><a href="#">Trabaja en MercaStore</a></li>
+                <li><a href="index.html">MercaStore</a></li>
+
+            </ul>
+
+        </li>
+
+        <li class="Contacta">
+        
+            <h2>CONTACTA</h2>
+        
+            <ul class="box">
+        
+                <li><a href="#">MercaStore contigo</a></li>
+        
+            </ul>
+        
+        </li>
+
+        <li class="informacion">
+        
+            <h2>INFORMACIÓN</h2>
+        
+            <ul class="box">
+        
+                <li><a href="preguntas.html">Preguntas frecuentes</a></li>
+                <li><a href="#">Condiciones de uso</a></li>
+                <li><a href="#">Política de privacidad y protección de datos</a></li>
+                <li><a href="#">Política de cookies</a></li>
+                <li><a href="#">Gestión de cookies</a></li>
+                <li><a href="#">Medidas COVID-19</a></li>
+                <li><a href="#">Retirada de productos</a></li>
+        
+
+            </ul>
+        
+        </li>
+    </ul>
+
+
+    <a href="#" class="goup"><div class="icon-goup"></div></a>
+
+</footer>
+
+</body>
+</html>

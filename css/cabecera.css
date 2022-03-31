@@ -1,0 +1,1036 @@
+
+body{
+    overflow-x: hidden;
+}
+
+.cabecera-logo{
+
+    height: 25vh;
+
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+
+}
+
+.cabecera-logo ~ *{
+    overflow-x: scroll;
+}
+
+.cabecera-logo img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.cabecera{
+    height: 15vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(108, 199, 108);
+    z-index: 1000;
+    padding-top: 10px;
+
+    box-sizing: border-box;
+
+    position: sticky;
+
+    top: 0;
+
+    animation-name: aparecerCabecera;
+    animation-duration: 1.5s;
+
+}
+
+.dialog-bc{
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 500;
+
+    background-color: rgba(161, 161, 161, 0.39);
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.dialog-bc .fatalError{
+
+    width: 50%;
+    height: 25%;
+
+    background-color: rgb(230, 39, 39);
+    border-radius: 40px;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    
+    flex-direction: column;
+
+
+    padding: 20px;
+
+}
+
+.fatalError .messaje{
+
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(255, 255, 255);
+    text-align: center;
+
+}
+
+.fatalError .error{
+
+    width: 100%;
+    text-align: center;
+
+}
+
+@keyframes aparecerCabecera {
+    
+    from{
+        height: 0;
+    }
+
+    to{
+        height: 15vh;
+    }
+
+}
+
+.cabecera header{
+    width: 100%;
+    height: 65%;
+
+}
+
+.cabecera header > *{
+    float: left;
+}
+
+.cabecera header .logo-container{
+
+    width: 25%;
+    height: 100%;
+
+    background-image: url("../images/logo-fondo.PNG");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.cabecera header .logo-container a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.cabecera header .search-container{
+
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.search-button-display{
+
+    background-image: url("../images/buscar.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    transform: scale(1);
+    transition: transform .5s;
+
+    animation: aparecerButton 1.5s;
+
+    cursor: pointer;
+
+    width: 50px;
+    height: 50px;
+}
+
+.search-button-display:hover{
+    background-image: url("../images/buscarHover.png");
+    transform: scale(1.1);
+    transition: transform 1s;
+}
+
+@keyframes aparecerButton {
+    
+    from{
+        transform:scale(0);
+    }
+
+    to{
+        transform:scale(1);
+    }
+
+}
+
+@keyframes aparecerBuscador {
+    
+    from{
+        transform: scaleX(0);
+    }
+
+    to{
+        transform: scaleX(1);
+    }
+
+}
+
+@keyframes desaparecerBuscador {
+    
+    from{
+        transform: scaleX(1);
+    }
+
+    to{
+        transform: scaleX(0);
+    }
+
+}
+
+@keyframes desaparecerButton {
+    
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(0);
+    }
+
+}
+
+.cabecera header .search-container > div{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#search{
+
+    font-size: 1.8em;
+
+    background-image: url("../images/buscar.png");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+
+    border: none;
+
+    box-sizing: border-box;
+
+    height: 100%;
+    width: 100%;
+
+    border: 2px rgb(128, 128, 128) solid;
+    border-left: 1px rgb(128, 128, 128) solid;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+
+#search:focus-visible{
+    outline: none;
+}
+
+
+#secciones-selector{
+    height: 100%;
+    font-size: 1.2em;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 2px rgb(128, 128, 128) solid;
+    border-right: 1px rgb(128, 128, 128) solid;
+
+}
+
+.cabecera .user-container{
+
+    width: 25%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+
+}
+#button{
+    display: inline-flex;
+    justify-content: center;
+    width: 50%;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(15, 110, 15);
+    border-radius: 15px;
+    padding: 3%;
+    animation-name: aparecerButton;
+    animation-duration: 1.5s;
+    margin-top: 20px;
+}
+#button:hover{
+    background: rgb(33, 223, 33);
+}
+
+#button.login{
+
+    background-color: transparent;
+
+}
+
+.cesta-item, .favorito-item{
+    cursor: pointer;
+}
+
+.cestaUser:hover, .favoritoUser:hover{
+    transform: translate(0);
+}
+
+#button.login a{
+    color: black;
+    font-size: .5em;
+    font-weight: bold;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
+
+.cabecera .user-container a{
+    color: white;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.cabecera nav{
+
+    position: relative;
+    height: 35%;
+
+    display: flex;
+
+}
+
+nav .slide-menu{
+    overflow-y: scroll;
+}
+
+nav .slide-menu::-webkit-scrollbar{
+    display: none;
+}
+
+.menuIcon{
+
+    position: absolute;
+
+    width: 25px;
+    height: 25px;
+
+    top: calc(12.5%);
+    left: 10px;
+
+    background-image: url("../images/menu.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+    cursor: pointer;
+
+    transform: scale(0);
+
+    animation-name: aparecerButton;
+    animation-delay: .5s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+
+}
+
+.menuIcon:hover ~ .menu{
+    transform: translate(0);
+
+    transition-property: transform;
+    transition-duration: .5s;
+    transition-delay: .5s;
+
+}
+
+.menu:hover{
+    transform: translate(0);
+}
+
+nav > div{
+
+    transform: translate(-100%);
+
+    top: 100%;
+
+    transition-property: transform;
+    transition-duration: .5s;
+    transition-delay: .5s;
+
+    position: absolute;
+
+    width: max-content;
+    /*max-height: max-content;
+    min-height: 100vh;*/
+    height: calc(100vh - 15vh);
+    background-color: rgba(206, 206, 206, 0.897);
+
+    z-index: 500;
+
+
+}
+
+.cestaUser, .favoritoUser{
+    right: 0;
+    transform: translate(100%);
+    width: 50%;
+
+    padding: 10px;
+}
+
+.cestaUser{
+    background-color: rgba(109, 224, 228, 0.877);
+}
+
+.favoritoUser{
+    background-color: rgba(216, 124, 124, 0.877);
+}
+
+.cestaUser .comprar-cesta{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(83, 214, 83);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.cestaUser .comprar-cesta:disabled{
+    background-color: rgb(151, 151, 151);
+}
+
+.cestaUser .comprar-cesta > b{
+    font-size: 1.5em;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.cestaUser .comprar-cesta:hover{
+    background-color: rgb(63, 173, 63);
+}
+
+.cestaUser .comprar-cesta:disabled:hover{
+    background-color: rgb(151, 151, 151);
+}
+
+
+nav .icon-container{
+
+    width: 100%;
+    height: 50px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+}
+
+.menu-seccion{
+    padding: 20px;
+}
+
+.menu-seccion li{
+
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(38, 180, 38);
+    margin: 2px 0;
+
+}
+
+.menu-seccion li a{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.menu-seccion li, .favorito-items li, .cesta-items li{
+    list-style: none;
+}
+
+.menu-seccion a, a.product-container{
+    color: black;
+    text-decoration: none;
+}
+
+.menu-seccion a:hover, a.product-container:hover > div.info-item{
+    text-decoration: underline;
+}
+
+a.product-container:hover{
+    background-color: rgba(189, 189, 189, 0.308);
+    border-radius: 10px;
+}
+
+a.product-container{
+
+    margin: 40px 0;
+
+    display: flex;
+    width: 100%;
+    height: max-content;
+
+    flex-direction: row;
+
+    gap: 2px;
+
+    box-sizing: border-box;
+
+    position: relative;
+
+}
+
+a.product-container > div.image-item{
+
+    width: 50%;
+    height: 75px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+}
+
+a.product-container > div.image-item > span.stock{
+
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: .8em;
+    padding: 0;
+    padding: 2px;
+    border-radius: 10px;
+
+}
+
+a.product-container:hover > div.image-item > span.stock{
+    text-decoration: none;
+}
+
+a.product-container > div.image-item > span.stock.litleStock{
+    color: rgb(138, 90, 0);
+    background-color: rgb(248, 181, 58);
+}
+
+a.product-container > div.image-item > span.stock.notStock{
+    color: rgb(206, 0, 0);
+    background-color: rgb(255, 71, 71);
+}
+
+a.product-container > div.info-item{
+
+    display: flex;
+    flex-direction: column;
+
+    font-size: 1.5em;
+
+}
+
+
+a.product-container > div.info-item > .price-product{
+    font-size: .8em;
+}
+
+a.product-container > div.info-item > .cantidad-product{
+
+    font-size: .7em;
+
+}
+
+a.product-container:hover .option{
+    display: block;
+}
+
+a.product-container .option{
+
+    display: none;
+
+    position: absolute;
+
+    border-radius: 10px;
+    padding: 0 5px;
+
+    font-size: 1.5em;
+
+    bottom: 10px;
+    right: 0;
+
+}
+
+.option:hover{
+    background-color: rgba(128, 128, 128, 0.438);
+}
+
+.option:hover ~ .delete-container, .delete-container:hover{
+
+    animation-name: aparecerDeleteContainer;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+
+}
+
+.delete-container{
+
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+
+    padding: 2px;
+
+    animation-name: desaparecerDeleteContainer;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+
+    border-radius: 10px;
+    background-color: rgb(248, 61, 61);
+    color: white
+
+}
+
+@keyframes aparecerDeleteContainer {
+    
+    from{
+        display: none;
+        transform: scaleY(0);
+    }
+
+    to{
+        display: block;
+        transform: scaleY(1);
+    }
+
+}
+
+@keyframes desaparecerDeleteContainer {
+    
+    from{
+        display: block;
+        transform: scaleY(1);
+    }
+
+    to{
+        display: none;
+        transform: scaleY(0);
+    }
+
+}
+
+*,*:before,*:after{
+    box-sizing: border-box;
+}
+.infofinal{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    display: grid;
+    font-size:20px;
+    position: relative;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.infofinal .goup{
+
+    position: absolute;
+
+    cursor: pointer;
+
+    bottom: 10px;
+    right: 10px;
+
+    width: 40px;
+
+    height: 40px;
+
+    background-color: rgb(84, 84, 250);
+
+    color: white;
+
+    font-size: 2em;
+
+    padding: 5px;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    border-radius: 40px;
+
+}
+
+.infofinal .goup > .icon-goup{
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../images/arrow_up.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.infofinal .goup:hover > .icon-goup{
+    background-image: url("../images/arrow_up_hover.png");
+}
+
+main{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#9b9b9b;
+    line-height: 3.8;
+    font-size: 80px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+footer{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 50px;
+    color: black;
+    background-color: lightgreen;
+    font-weight: bold;
+}  
+.footer > *{
+    flex: 1 100%;
+}
+.footer-left{
+    margin-right: 1.25em;
+    margin-bottom: 2em;
+}
+h2{
+    font-weight: 600;
+    font-size: 30px;
+}
+.footer ul{
+    list-style: none;
+    padding-left: 2em;
+}
+.footer li{
+    line-height: 2em;
+}
+.footer a{
+    text-decoration: none;
+}
+.footer-right{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: row wrap;
+}
+.footer-right > *{
+    flex: 1 50%;
+    margin-right: 1.25em;
+}
+.box a{
+    color: black;
+}
+.footer-bottom{
+    text-align: center;
+    color: black;
+    padding-top: 50px;
+}
+.footer-left p{
+    padding-right: 20%;
+    color: black;
+}
+.socials{
+    text-align: center;
+    align-items: center;
+}
+.socials a{
+    background:green;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.socials a i{
+    color: black;
+    padding: 10px 12px;
+    font-size: 20px;
+}
+
+
+.panel-user{
+
+    width: 50%;
+    height: 50%;
+
+    margin-top: 20px;
+
+    border-radius: 20px;
+
+    background-color: rgb(182, 182, 182);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    overflow-x: scroll;
+
+    border: 2px black solid;
+
+}
+
+.panel-user::-webkit-scrollbar{
+    display: none;
+}
+
+.panel-user .data{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 10px;
+
+    height: max-content;
+
+    position: relative;
+
+}
+
+.panel-user .data span.error{
+
+    position: absolute;
+
+    bottom: 15px;
+    right: 15px;
+
+    width: 25px;
+    height: 25px;
+
+    background-image: url("../images/error_login.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    cursor: pointer;
+
+    z-index: 200;
+
+}
+
+.panel-user .data span.error:hover ~ .messaje-container{
+
+    display: flex;
+
+    opacity: 1;
+
+    transition: opacity .5s;
+
+}
+
+.panel-user .data .messaje-container{
+
+    opacity: 0;
+
+    transition-property: opacity;
+    transition-duration: .5s;
+    transition-delay: .5s;
+
+    animation-name: delayDisplayNone;
+    animation-duration: 0s;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+
+    position: absolute;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+
+    background-color: rgb(223, 24, 24);
+    border-radius: 40px;
+
+    width: max-content;
+    height: max-content;
+
+    top: 100%;
+    right: 10px;
+
+    transform: translateY(-50%);
+
+    z-index: 300;
+
+    cursor: default;
+
+}
+
+@keyframes delayDisplayNone {
+    
+    from{
+        display: inherit;
+    }
+
+    to{
+        display: flex;
+    }
+
+}
+
+.panel-user .button-save{
+
+    align-self: center;
+
+    width: 50%;
+
+    text-align: center;
+
+    padding: 5px;
+
+    background-color: rgb(22, 109, 240);
+
+    border-radius: 10px;
+
+
+    font-size: 1.3em;
+
+    color: white;
+
+    cursor: pointer;
+
+}
+
+.panel-user .button-save:hover{
+    color: rgb(0, 255, 0);
+}
+
+.panel-user .button-exit{
+    align-self: center;
+    cursor: pointer;
+    font-size: 1.3em;
+    margin: 10px 0;
+    padding: 5px;
+    color: rgb(179, 0, 0);
+    font-weight: bold;
+}
+
+.panel-user .button-exit:hover{
+
+    background-color: rgb(204, 0, 0);
+    color: white;
+    border-radius: 10px;
+
+}
+
+.panel-user .data > label{
+    font-size: 1.3em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.panel-user .data > input{
+    border: 1px rgb(128, 128, 128) solid;
+    outline: none;
+    font-size: 1.3em;
+    padding: 5px;
+}
+
+@keyframes aparecerPanelUser {
+    
+    from{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+}
+
+@keyframes desaparecerPanelUser {
+    
+    from{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+}
+
+@media screen and (min-width: 600px){
+    .footer-right > *{
+        flex: 1;
+    }
+    .footer-left{
+        flex: 1 0px;
+    }
+    .footer-right{
+        flex: 2 0px;
+    }
+}
+
+@media (max-width: 600px){
+    .footer{
+        padding: 15px;
+    }
+    main{
+        font-size: 55px;
+    }
+}

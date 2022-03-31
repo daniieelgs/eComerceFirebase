@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/cabecera.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+
+    <meta name="google-signin-client_id" content="546317940028-kju6ve3c28ffm3afla79c625cf09o8eo.apps.googleusercontent.com">
+    <meta name="google-signin-cookiepolicy" content="single_host_origin">
+    <meta name="google-signin-scope" content="profile email">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>Resgistrarse</title>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+    
+</head>
+
+<body>
+
+    <div class="cabecera-logo">
+
+        <div class="dialog-bc" style="display: none;"></div>
+
+        <a href="index.html">
+            <img class="logo" src="images/logo.PNG">
+        </a>
+    </div>
+
+    <div class="login">
+
+        <div>
+            <h1>Registrarse</h1>
+
+            <div class="iniciaGoogle">
+                <button type="button" class="loginGoogle" id="googlelogin">
+                    <span class="logo"></span>
+                    <span>Iniciar con Google</span>
+                </button>
+            </div>
+    
+            <div class="spacing">
+                <hr/><span>O bien</span><hr/>
+            </div>
+
+            <form id="registra" action="" method="post">
+
+                <div class="input-contenidorH">
+                    <div class="input-contenidor">
+                        <div class="spacing"></div>
+                        <input type="text" class="loginUser" name="name" id="name" autocomplete="name" onkeyup="if(this.value.trim()) this.nextElementSibling.style.color='rgb(0, 128, 0)'; else this.nextElementSibling.style.color='black'">
+                        <label for="name" class="into">Nombre</label>
+                    </div>
+
+                    <div class="input-contenidor">
+                        <div class="spacing"></div>
+                        <input type="text" class="loginUser" name="backname" id="backname" autocomplete="cc-name" onkeyup="if(this.value.trim()) this.nextElementSibling.style.color='rgb(0, 128, 0)'; else this.nextElementSibling.style.color='black'">
+                        <label for="backname" class="into">Apellido</label>
+                    </div>
+                </div>
+
+
+                <div class="input-contenidor">
+                    <div class="spacing"></div>
+                    <input type="text" class="loginUser" name="mail" id="mail" autocomplete="email">
+                    <label for="mail" class="into">Correo electrónico</label>
+                </div>
+    
+                <div class="input-contenidor">
+                    <div class="spacing"></div>
+                    <input type="button" class="seePass no-ver">
+                    <input type="password" class="loginUser" name="pass" id="pass" autocomplete="new-password">
+                    <label for="pass" class="into">Contraseña</label>
+                </div>
+
+                <div class="input-contenidor">
+                    <div class="spacing"></div>
+                    <input type="password" class="loginUser" name="pass-repeat" id="pass-repeat" autocomplete="new-password">
+                    <label for="pass-repeat" class="into">Repite la contraseña</label>
+                </div>
+    
+                <input type="submit" value="Registrarse" class="button">
+                <!-- CREAR LOADER -->
+
+            </form>
+
+            <div class="spacing">
+                <hr/><span>¿Ya tienes cuenta?</span><hr/>
+            </div>
+
+            <div class="iniciaLogin">
+                <button class="register" onclick="window.location.href='login.html'">
+                    <span>Iniciar Sesión</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/cabecera.js"></script>
+    <script src="js/loadData.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/firestore.js"></script>
+    <script src="js/validate.js"></script>
+</body>
+    
+
+
+</html>

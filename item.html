@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="images/favicon.PNG"/>
+
+    <title>MercaStore</title>
+
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/cabecera.css" type="text/css">
+    <link rel="stylesheet" href="css/item.css" type="text/css">
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/8bdf1dfee5.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="cabecera">
+
+        <div class="dialog-bc" style="display: none;"></div>
+
+        <header>
+
+            <div class="logo-container">
+                <a href="index.html"></a>
+            </div>
+
+            <div class="search-container">
+
+                <span class="search-button-display"></span>
+
+                <div class="searcher" style="display: none;">
+
+                    <!--  ///////////////////////////////////// -->
+
+                    <select name="search" id="secciones-selector">
+                        <option selected="" value="1">Todas las secciones</option>
+                    </select>
+                    
+                    <input type="text" name="search" id="search" placeholder="Buscar...">
+                </div>
+
+            </div>
+
+            <div class="user-container">
+
+
+                <button type="button" id="button">
+                    <span class="userAccount-item" style="display: none; width: 20px; height: 20px; margin-right: 5px; background-image: url('images/userAccount.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+                    <a href="login.html"><span></span>Mi Cuenta</a>
+                </button>
+
+                <span class="cesta-item" style="display: none; width: 50px; height: 40px; margin-right: 5px; background-image: url('images/carritoCompra.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+                <span class="favorito-item " style="display: none; width: 50px; height: 40px; margin-right: 5px; background-image: url('images/favorito_hover.png'); background-repeat: no-repeat; background-size: contain; background-position: center;"></span>
+
+            </div> 
+
+        </header>
+
+        <nav>
+
+            <span class="menuIcon"></span>
+
+            <div class="menu slide-menu">
+
+                <ul class="menu-seccion">
+
+                </ul>
+
+            </div>
+
+            <div class="cestaUser slide-menu">
+
+                <div class="icon-container" style="background-image: url('images/carritoCompra.png');"></div>
+
+                <ul class="cesta-items">
+
+                </ul>
+
+                <h1 class="total-price" style="width: 100%; text-align: center">Total: <span class="price">0.00</span>€</h1>
+
+                <button class="comprar-cesta"><b>Comprar</b></button>
+
+            </div>
+
+            <div class="favoritoUser slide-menu">
+
+                <div class="icon-container" style="background-image: url('images/favorito_hover.png');"></div>
+
+                <ul class="favorito-items">
+                    
+                </ul>
+
+            </div>
+
+        </nav>
+
+        <script>
+
+            const campoBuscar=document.getElementById("search");
+            const campoSecciones=document.getElementById("secciones-selector");
+            
+            //const enterKey = e => {if(e.code=="Enter") buscar(campoBuscar.value, campoSecciones.options[campoSecciones.value-1].innerText);}
+
+            const enterKey = e => {if(e.code=="Enter" && campoBuscar.value.trim()) window.location.href=`search.html?search=${campoBuscar.value.trim().replace(' ', '%20')}` + (campoSecciones.options[campoSecciones.value-1].innerText!='Todas las secciones' ? `&section=${campoSecciones.options[campoSecciones.value-1].innerText}` : ``);}
+
+            campoBuscar.addEventListener("keydown", enterKey);
+            campoSecciones.addEventListener("keydown", enterKey);
+
+
+        </script>
+
+    </div>
+
+    <div id="view">
+
+        <div class="show-item">
+
+            <div class="images-item">
+
+                <div class="image-big">
+
+                    <div class="control next"><span>&#10095;</span></div>
+                    <div class="control previous"><span>&#10094;</span></div>
+
+                </div>
+
+                <div class="images-small"></div>
+
+            </div>
+
+            <div class="info-item">
+
+                <h1 class="name-item"></h1>
+                
+                <div class="precios">
+                    <div class="precio-main">
+                        <span class="base"></span>
+                        <span class="cent"></span>
+                        <span class="euro">€</span>
+                    </div>
+    
+                    <div class="precio-no-iva">
+                        <span class="title">SIN IVA</span>
+                        <span class="precio"></span>
+                    </div>
+                </div>
+
+                <div class="ficha-item">
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="title-row">Envio</span>
+                        </div>
+                        <div class="column">
+                            <span class="value-row envio"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="title-row">Devolución</span>
+                        </div>
+                        <div class="column">
+                            <span class="value-row devolucion">Devolución GRATIS</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="title-row">Cantidad</span>
+                        </div>
+                        <div class="column">
+                            <div class="input-number">
+                                <button class="bt-secondary less"><span>-</span></button>
+                                <input type="text" name="nStock" id="nStock">
+                                <button class="bt-secondary more"><span>+</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="title-row">Envío a domicilio</span>
+                        </div>
+                        <div class="column">
+                            <span class="value-row stock"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <span class="title-row">Descripción</span>
+                        </div>
+                        <div class="column">
+                            <span class="value-row descripcion"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <div class="buttons-anadir">
+
+                        <button class="favorito">
+                            <span class="favorito-icono"></span>
+                        </button>
+
+                        <button class="carrito">
+                            <span class="arrow-down"></span>
+                            <span class="carrito-icono"></span>
+                        </button>
+
+                    </div>
+
+                    <button class="comprar">
+                        <span class="value">Comprar</span>
+                        <span class="arrow-right"></span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div class="compartir-item">
+            <div class="icons">
+                <a href="#" target="_blank" class="twitter"></a>
+                <a href="#" target="_blank" class="facebook"></a>
+                <a href="#" target="_blank" class="mail"></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script language="javascript" src="js/funciones.js"></script>
+    <script language="javascript" src="js/config.js"></script>
+    <script language="javascript" src="js/firestore.js"></script>
+    <script language="javascript" src="js/loadData.js"></script>
+    <script language="javascript" src="js/cabecera.js"></script>
+
+    <script>
+
+        loadUserData();
+
+        async function load(){
+
+            readSection();
+
+            const datosUrl=loadUrlData();
+
+            const idProducto=datosUrl['p'];
+            const cantidadProducto=datosUrl['n'];
+
+            const doc=await readProduct(idProducto);
+
+            const item=doc.data();
+
+            loadProduct(item, idProducto);
+
+            let isLogin=true;
+
+            if(!auth.currentUser) isLogin=false;
+
+            if(cantidadProducto) document.getElementById("nStock").value=(cantidadProducto <=item["stock"] ? cantidadProducto : item["stock"]);
+
+            document.querySelector(".comprar").addEventListener("click", e => window.location.href=isLogin ? `buy.html?p=${idProducto}&n=${document.getElementById("nStock").value}` : `login.html`);
+
+            document.querySelector("button.favorito").addEventListener("click", e => {
+
+                if(!isLogin) window.location.href="login.html";
+                else if(addItemList("deseo", doc.ref)) removeItemList("deseo", doc.ref);
+
+            });
+
+            document.querySelector("button.carrito").addEventListener("click", e => {
+
+                const cantidad=parseInt(document.getElementById("nStock").value);
+
+                if(!isLogin) window.location.href="login.html";
+                else if(addItemList("cesta", doc.ref, cantidad, "cestaCantidad")) removeItemList("cesta", doc.ref, "cestaCantidad");
+
+            });
+
+        }
+
+        load();
+
+    </script>
+
+    
+<footer class="infofinal">
+
+    <div class="footer-left">
+
+        <div class="socials">
+
+            <a href="https://www.facebook.com/MercaStore-103038178983527"><i class="fa-brands fa-facebook-square"></i></a>
+            <a href="https://www.instagram.com/mercastoreweb/"><i class="fa-brands fa-instagram-square"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter-square"></i></a>
+        
+        </div>
+
+    </div>
+
+    <ul class="footer-right">
+
+        <li class="compañia">
+
+            <h2>COMPAÑÍA</h2>
+
+            <ul class="box">
+
+                <li><a href="somosmerca.html">Somos MercaStore</a></li>
+                <li><a href="#">Calidad MercaStore</a></li>
+                <li><a href="#">Trabaja en MercaStore</a></li>
+
+            </ul>
+
+        </li>
+
+        <li class="Contacta">
+        
+            <h2>CONTACTA</h2>
+        
+            <ul class="box">
+        
+                <li><a href="#">MercaStore contigo</a></li>
+        
+            </ul>
+        
+        </li>
+
+        <li class="informacion">
+        
+            <h2>INFORMACIÓN</h2>
+        
+            <ul class="box">
+        
+                <li><a href="preguntas.html">Preguntas frecuentes</a></li>
+                <li><a href="#">Condiciones de uso</a></li>
+                <li><a href="#">Política de privacidad y protección de datos</a></li>
+                <li><a href="#">Política de cookies</a></li>
+                <li><a href="#">Gestión de cookies</a></li>
+                <li><a href="#">Medidas COVID-19</a></li>
+                <li><a href="#">Retirada de productos</a></li>
+        
+
+            </ul>
+        
+        </li>
+    </ul>
+
+
+    <a href="#" class="goup"><div class="icon-goup"></div></a>
+
+</footer>
+    
+</body>
+</html>

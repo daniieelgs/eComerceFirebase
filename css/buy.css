@@ -1,0 +1,246 @@
+body{
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.resumen-compra{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.resumen-compra > div{
+    width: 50%;
+    height: max-content;
+    float: left;
+}
+
+.list-items{
+    
+    display: flex;
+    flex-direction: column;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+}
+
+.list-items > div{
+
+    width: 100%;
+    height: max-content;
+
+}
+
+.list-items .item-container{
+    border-bottom: 2px gray solid;
+}
+
+.list-items .item-container > div{
+
+    width: 50%;
+    min-height: 150px;
+    height: max-content;
+    float: left;
+}
+
+.item-container .image-container img{
+
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+
+}
+
+.item-container .info-container{
+
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3em;
+    gap: 5px;
+
+}
+
+.info-container .name-item{
+    font-size: 2.3em;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.info-container .envio.free > span{
+    color: rgb(0, 207, 0);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.resumen-compra > .list-prices{
+    width: max-content;
+    min-width: 35%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.list-prices > .title{
+    
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+
+}
+
+.list-prices > .title .value{
+    border: 2px gray solid;
+    margin: 0;
+}
+
+.list-prices .factura{
+    
+    border: 2px gray solid;
+    border-top: none;
+
+}
+
+.list-prices .factura .title{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-bottom: 2px gray solid;
+    padding: 5px;
+}
+
+.list-prices .factura > div{
+    padding: 5px;
+}
+
+.list-prices .factura .precios > div{
+
+    width: 100%;
+    height: max-content;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin: 5px 0;
+}
+
+.list-prices .factura .coste-productos{
+    border-bottom: 2px gray solid;
+}
+
+.list-prices .factura .precios > div > .nombre-producto{
+    font-weight: bold;
+}
+
+.list-prices .factura .precios > div > .precio-envio.free{
+    color: rgb(0, 160, 0);
+}
+
+.list-prices .factura .precios > div > .total{
+    font-weight: bold;
+    font-size: 1.6em;
+}
+
+.list-prices .factura .precios > div > .total-valor{
+    font-weight: bold;
+    font-size: 1.6em;
+}
+
+.list-prices .factura > div.total-final{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 4px gray solid;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+button.comprar{
+    width: 25%;
+    height: 50px;
+    background-color: rgb(83, 214, 83);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+
+    margin: 40px;
+}
+
+button.comprar .value{
+    font-size: 1.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+button.comprar .arrow-right{
+    background-image: url("../images/arrow_right.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    width: 40px;
+    height: 40px;
+
+    position: absolute;
+
+    top: 50%;
+    right: 40px;
+
+    transform: translateY(-50%);
+}
+
+button.comprar:hover{
+    background-color: rgb(63, 173, 63);
+}
+
+button.comprar:hover .arrow-right{
+    background-image: url("../images/arrow_right_hover.png");
+
+    animation-name: arrowRight;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+}
+
+.loader{
+
+    width: 50px;
+    height: 50px;
+
+}
+
+.loader img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+@keyframes arrowRight {
+    0% {
+        right: 35px;
+    }
+  
+    50% {
+        right: 20px;
+    }
+  
+    100% {
+        right: 40px;
+    }
+ }

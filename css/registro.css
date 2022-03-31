@@ -1,0 +1,50 @@
+
+#titol {
+    text-align: center;
+    font-size:3em;
+    color: green;
+}
+.formulari {
+    
+    width: 50%;
+    padding: 18px;
+    float: left;
+    margin-left: 25%;
+
+}
+#formulari {
+    margin-top: 70px;
+    border: 2px green solid;
+}
+
+.form-part{
+    margin-bottom: 15px;
+    
+}
+.form-input{
+    width: 98%;
+    
+}
+.form-input:focus{
+    background: white;
+    border: 2px rgb(128, 128, 128) solid;
+    transform: scale(1.01);
+}
+.formulari input[type="submit"]{
+
+    width: 50%;
+    border: none;
+
+    color:white;
+    font-size: 1.5em;
+    background: rgb(0, 128, 0);
+    border-radius: 5px;
+    margin-top: 5px;
+
+    cursor: pointer;
+
+}
+.formulari input[type="submit"]:hover{
+    background: rgb(3, 172, 3);
+}
+
